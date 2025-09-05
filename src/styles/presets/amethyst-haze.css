@@ -1,0 +1,72 @@
+/* Amethyst Haze Theme Preset */
+:root.amethyst-haze {
+  --background: 252 98% 98%; /* #f8f7fa */
+  --foreground: 248 14% 27%; /* #3d3c4f */
+  --card: 0 0% 100%; /* #ffffff */
+  --card-foreground: 248 14% 27%; /* #3d3c4f */
+  --popover: 0 0% 100%; /* #ffffff */
+  --popover-foreground: 248 14% 27%; /* #3d3c4f */
+  --primary: 258 29% 58%; /* #8a79ab */
+  --primary-foreground: 252 98% 98%; /* #f8f7fa */
+  --secondary: 273 52% 91%; /* #dfd9ec */
+  --secondary-foreground: 248 14% 27%; /* #3d3c4f */
+  --muted: 269 30% 87%; /* #dcd9e3 */
+  --muted-foreground: 258 18% 44%; /* #6b6880 */
+  --accent: 336 46% 79%; /* #e6a5b8 */
+  --accent-foreground: 343 34% 29%; /* #4b2e36 */
+  --destructive: 0 59% 60%; /* #d95c5c */
+  --destructive-foreground: 252 98% 98%; /* #f8f7fa */
+  --border: 269 31% 80%; /* #cec9d9 */
+  --input: 267 57% 93%; /* #eae7f0 */
+  --ring: 258 29% 58%; /* #8a79ab */
+  --chart-1: 258 29% 58%; /* #8a79ab */
+  --chart-2: 336 46% 79%; /* #e6a5b8 */
+  --chart-3: 162 35% 60%; /* #77b8a1 */
+  --chart-4: 40 70% 75%; /* #f0c88d */
+  --chart-5: 215 60% 75%; /* #a0bbe3 */
+  --sidebar-background: 267 62% 95%; /* #f1eff5 */
+  --sidebar-foreground: 248 14% 27%; /* #3d3c4f */
+  --sidebar-primary: 258 29% 58%; /* #8a79ab */
+  --sidebar-primary-foreground: 252 98% 98%; /* #f8f7fa */
+  --sidebar-accent: 336 46% 79%; /* #e6a5b8 */
+  --sidebar-accent-foreground: 343 34% 29%; /* #4b2e36 */
+  --sidebar-border: 268 42% 86%; /* #d7d2e0 */
+  --sidebar-ring: 258 29% 58%; /* #8a79ab */
+  --radius: 0.5rem;
+}
+
+:root.amethyst-haze.dark {
+  --background: 258 35% 12%; /* #1a1823 */
+  --foreground: 276 40% 90%; /* #e0ddef */
+  --card: 258 30% 18%; /* #232030 */
+  --card-foreground: 276 40% 90%; /* #e0ddef */
+  --popover: 258 30% 18%; /* #232030 */
+  --popover-foreground: 276 40% 90%; /* #e0ddef */
+  --primary: 258 40% 70%; /* #a995c9 */
+  --primary-foreground: 258 35% 12%; /* #1a1823 */
+  --secondary: 258 25% 45%; /* #5a5370 */
+  --secondary-foreground: 276 40% 90%; /* #e0ddef */
+  --muted: 258 28% 19%; /* #242031 */
+  --muted-foreground: 258 20% 65%; /* #a09aad */
+  --accent: 319 25% 28%; /* #372e3f */
+  --accent-foreground: 345 45% 85%; /* #f2b8c6 */
+  --destructive: 0 50% 67%; /* #e57373 */
+  --destructive-foreground: 258 35% 12%; /* #1a1823 */
+  --border: 258 25% 25%; /* #302c40 */
+  --input: 258 30% 20%; /* #2a273a */
+  --ring: 258 40% 70%; /* #a995c9 */
+  --chart-1: 258 40% 70%; /* #a995c9 */
+  --chart-2: 345 45% 85%; /* #f2b8c6 */
+  --chart-3: 162 35% 60%; /* #77b8a1 */
+  --chart-4: 40 70% 75%; /* #f0c88d */
+  --chart-5: 215 60% 75%; /* #a0bbe3 */
+  --sidebar-background: 258 40% 8%; /* #16141e */
+  --sidebar-foreground: 276 40% 90%; /* #e0ddef */
+  --sidebar-primary: 258 40% 70%; /* #a995c9 */
+  --sidebar-primary-foreground: 258 35% 12%; /* #1a1823 */
+  --sidebar-accent: 319 25% 28%; /* #372e3f */
+  --sidebar-accent-foreground: 345 45% 85%; /* #f2b8c6 */
+  --sidebar-border: 258 30% 20%; /* #2a273a */
+  --sidebar-ring: 258 40% 70%; /* #a995c9 */
+  --radius: 0.5rem;
+}

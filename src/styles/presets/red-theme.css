@@ -1,0 +1,72 @@
+/* Red Theme Preset */
+:root.red-theme {
+  --background: 0 0% 100%; /* white */
+  --foreground: 0 0% 3.9%; /* near black */
+  --card: 0 0% 100%; /* white */
+  --card-foreground: 0 0% 3.9%; /* near black */
+  --popover: 0 0% 100%; /* white */
+  --popover-foreground: 0 0% 3.9%; /* near black */
+  --primary: 0 72% 51%; /* bright red #dc2626 */
+  --primary-foreground: 0 0% 98%; /* near white */
+  --secondary: 0 0% 96%; /* light gray */
+  --secondary-foreground: 0 0% 9%; /* dark gray */
+  --muted: 0 0% 96%; /* light gray */
+  --muted-foreground: 0 0% 45%; /* medium gray */
+  --accent: 0 93% 94%; /* very light red */
+  --accent-foreground: 0 84% 30%; /* dark red */
+  --destructive: 0 84% 60%; /* red */
+  --destructive-foreground: 0 0% 98%; /* near white */
+  --border: 0 0% 90%; /* light border */
+  --input: 0 0% 96%; /* light input bg */
+  --ring: 0 72% 51%; /* bright red ring */
+  --chart-1: 0 72% 51%; /* bright red */
+  --chart-2: 0 93% 94%; /* light red */
+  --chart-3: 142 76% 36%; /* green */
+  --chart-4: 38 92% 50%; /* orange */
+  --chart-5: 221 83% 53%; /* blue */
+  --sidebar-background: 0 0% 98%; /* very light gray */
+  --sidebar-foreground: 0 0% 3.9%; /* near black */
+  --sidebar-primary: 0 72% 51%; /* bright red */
+  --sidebar-primary-foreground: 0 0% 98%; /* near white */
+  --sidebar-accent: 0 93% 94%; /* very light red */
+  --sidebar-accent-foreground: 0 84% 30%; /* dark red */
+  --sidebar-border: 0 0% 90%; /* light border */
+  --sidebar-ring: 0 72% 51%; /* bright red */
+  --radius: 0.5rem;
+}
+
+:root.red-theme.dark {
+  --background: 0 0% 3.9%; /* very dark */
+  --foreground: 0 0% 98%; /* near white */
+  --card: 0 0% 3.9%; /* very dark */
+  --card-foreground: 0 0% 98%; /* near white */
+  --popover: 0 0% 3.9%; /* very dark */
+  --popover-foreground: 0 0% 98%; /* near white */
+  --primary: 0 72% 51%; /* bright red */
+  --primary-foreground: 0 0% 98%; /* near white */
+  --secondary: 0 0% 14.9%; /* dark gray */
+  --secondary-foreground: 0 0% 98%; /* near white */
+  --muted: 0 0% 14.9%; /* dark gray */
+  --muted-foreground: 0 0% 63.9%; /* light gray */
+  --accent: 0 0% 14.9%; /* dark gray */
+  --accent-foreground: 0 0% 98%; /* near white */
+  --destructive: 0 62.8% 30.6%; /* dark red */
+  --destructive-foreground: 0 0% 98%; /* near white */
+  --border: 0 0% 14.9%; /* dark border */
+  --input: 0 0% 14.9%; /* dark input bg */
+  --ring: 0 72% 51%; /* bright red ring */
+  --chart-1: 0 72% 51%; /* bright red */
+  --chart-2: 0 62.8% 30.6%; /* dark red */
+  --chart-3: 142 76% 36%; /* green */
+  --chart-4: 38 92% 50%; /* orange */
+  --chart-5: 221 83% 53%; /* blue */
+  --sidebar-background: 0 0% 2%; /* very dark */
+  --sidebar-foreground: 0 0% 98%; /* near white */
+  --sidebar-primary: 0 72% 51%; /* bright red */
+  --sidebar-primary-foreground: 0 0% 98%; /* near white */
+  --sidebar-accent: 0 0% 14.9%; /* dark gray */
+  --sidebar-accent-foreground: 0 0% 98%; /* near white */
+  --sidebar-border: 0 0% 14.9%; /* dark border */
+  --sidebar-ring: 0 72% 51%; /* bright red */
+  --radius: 0.5rem;
+}
