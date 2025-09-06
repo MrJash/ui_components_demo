@@ -39,7 +39,7 @@ export function ThemeProvider({ children }) {
     root.classList.remove('theme-transition')
     
     // Apply theme changes
-    root.classList.remove('light', 'dark', 'oled', 'gray', 'amethyst-haze', 'red-theme', 'blue-theme')
+    root.classList.remove('light', 'dark', 'oled', 'gray', 'amethyst-haze', 'sunset-horizon')
     root.classList.add(theme)
     
     // Add theme style classes
@@ -52,10 +52,8 @@ export function ThemeProvider({ children }) {
     // Add preset classes
     if (themePreset === 'amethyst-haze') {
       root.classList.add('amethyst-haze')
-    } else if (themePreset === 'red') {
-      root.classList.add('red-theme')
-    } else if (themePreset === 'blue') {
-      root.classList.add('blue-theme')
+    } else if (themePreset === 'sunset-horizon') {
+      root.classList.add('sunset-horizon')
     }
     
     // Re-enable transitions after a brief delay

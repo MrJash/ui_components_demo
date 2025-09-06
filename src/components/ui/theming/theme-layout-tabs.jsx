@@ -5,6 +5,7 @@ import { Badge } from '../badge'
 import { useTheme } from '../../../contexts/ThemeContext'
 import { Monitor, Moon, Sun, Palette, Paintbrush2 } from 'lucide-react'
 import '../../../styles/presets/amethyst-haze.css'
+import '../../../styles/presets/sunset-horizon.css'
 
 export function ThemeLayoutTabs() {
   const { theme, themeStyle, setThemeStyle, themePreset, setThemePreset } = useTheme()
@@ -70,21 +71,12 @@ export function ThemeLayoutTabs() {
       }
     },
     {
-      id: 'red',
-      name: 'Red',
-      description: 'Bold red accent theme',
+      id: 'sunset-horizon',
+      name: 'Sunset Horizon',
+      description: 'Warm orange and coral sunset-inspired theme',
       colors: {
-        primary: 'hsl(0 84% 60%)',
-        accent: 'hsl(0 40% 96%)',
-      }
-    },
-    {
-      id: 'blue',
-      name: 'Blue',
-      description: 'Cool blue accent theme',
-      colors: {
-        primary: 'hsl(221.2 83.2% 53.3%)',
-        accent: 'hsl(210 40% 96%)',
+        primary: 'hsl(11.6250 100% 68.6275%)',
+        accent: 'hsl(26.1069 98.4962% 73.9216%)',
       }
     },
     // More presets will be added from tweakcn
@@ -113,7 +105,19 @@ export function ThemeLayoutTabs() {
           </TabsList>
           
           <TabsContent value="backgrounds" className="space-y-4">
-            <div className="space-y-3">
+            {themePreset !== 'default' && (
+              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
+                <div className="flex items-center space-x-2 text-muted-foreground">
+                  <Monitor className="w-4 h-4" />
+                  <p className="text-sm">
+                    Background customization is disabled when using color presets. 
+                    Switch to "Default" preset to customize backgrounds.
+                  </p>
+                </div>
+              </div>
+            )}
+            
+            <div className={`space-y-3 ${themePreset !== 'default' ? 'opacity-50 pointer-events-none' : ''}`}>
               <h4 className="font-medium text-sm flex items-center space-x-2">
                 <Monitor className="w-4 h-4" />
                 <span>{theme === 'dark' ? 'Dark' : 'Light'} Mode Backgrounds</span>
@@ -123,13 +127,14 @@ export function ThemeLayoutTabs() {
                 <div
                   key={style.id}
                   className={`
-                    relative p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
+                    relative p-4 rounded-lg border-2 transition-all duration-200
+                    ${themePreset === 'default' ? 'cursor-pointer' : 'cursor-not-allowed'}
                     ${themeStyle === style.id 
                       ? 'border-primary bg-primary/5' 
                       : 'border-border hover:border-primary/50'
                     }
                   `}
-                  onClick={() => handleStyleChange(style.id)}
+                  onClick={() => themePreset === 'default' && handleStyleChange(style.id)}
                 >
                   <div className="flex items-start space-x-3">
                     <div className={`w-12 h-8 rounded border-2 ${style.preview}`} />

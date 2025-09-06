@@ -1,11 +1,10 @@
+/* Import theme presets */
+@import './styles/presets/amethyst-haze.css';
+@import './styles/presets/sunset-horizon.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import theme presets */
-@import './styles/presets/amethyst-haze.css';
-@import './styles/presets/red-theme.css';
-@import './styles/presets/blue-theme.css';
 
 @layer base {
   :root {
