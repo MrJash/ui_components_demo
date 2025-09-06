@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
@@ -32,12 +33,13 @@ export default function FormsPage() {
     e.preventDefault()
     console.log('Form submitted:', formData)
   }
+  const wrapper = { hidden: { opacity: 0, rotateX: 6 }, visible: { opacity: 1, rotateX: 0, transition: { duration: 0.45 } } }
 
   return (
-    <div className="space-y-8">
+    <motion.div initial="hidden" animate="visible" variants={wrapper} className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Forms & Input</h1>
-        <p className="text-muted-foreground">
+        <p className="mt-0.5 text-muted-foreground">
           Form controls and input components for collecting user data.
         </p>
       </div>
@@ -324,6 +326,6 @@ export default function FormsPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </motion.div>
   )
 }

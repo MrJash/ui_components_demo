@@ -1,6 +1,9 @@
 /* Import theme presets */
 @import './styles/presets/amethyst-haze.css';
 @import './styles/presets/sunset-horizon.css';
+@import './styles/presets/bold-tech.css';
+@import './styles/presets/elegant-luxury.css';
+@import './styles/presets/nature.css';
 
 @tailwind base;
 @tailwind components;
@@ -28,6 +31,12 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
+    
+    /* Default font families */
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+    --font-serif: Playfair Display, ui-serif, Georgia, serif;
+    --font-mono: Fira Code, ui-monospace, SFMono-Regular, monospace;
+    
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -58,6 +67,12 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    
+    /* Default font families for dark mode */
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+    --font-serif: Playfair Display, ui-serif, Georgia, serif;
+    --font-mono: Fira Code, ui-monospace, SFMono-Regular, monospace;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -67,6 +82,89 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+}
+
+/* Custom toggle demo styles */
+.custom-toggle-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.btn{
+  background-color: #fff;
+  width: 4rem;
+  height: 2rem;
+  border-radius: 2rem;
+  padding: 0 0.125rem;
+
+  box-shadow: inset 0 2px 15px rgba(0,0,0, .1),
+              inset 0 2px 2px rgba(0,0,0, .1),
+              inset 0 -1px 1px rgba(0,0,0, .1);
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  border: none;
+}
+
+.btn__indicator{
+  background-color: #fff;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+
+  position: absolute;
+
+  box-shadow: 0 2px 10px rgba(0,0,0, .2);
+
+  transition: transform .3s ease;
+}
+
+.btn__icon-container{
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn__icon{
+  color: var(--light-icon-color, #f59e0b);
+  font-size: 0.875rem;
+}
+
+/* -------------- ANIMATION ------------ */
+.btn__icon.animated{
+  animation: spin 0.5s;
+}
+
+@keyframes spin{
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* -------------- DARKMODE -------------- */
+.btn.darkmode{
+  box-shadow: inset 0 2px 15px rgba(0,0,0, .3),
+              inset 2px 0 2px rgba(0,0,0, .3),
+              inset 0 -1px 1px rgba(0,0,0, .3);
+}
+
+.btn.darkmode .btn__indicator{
+  transform: translateX(2.125rem);
+  background-color: var(--dark-color, #0f172a);
+  box-shadow: 0 2px 10px rgba(0,0,0, .3);
+}
+
+.btn.darkmode .btn__icon{
+  color: var(--dark-icon-color, #e5e7eb);
 }
 
 /* OLED Black Theme */
@@ -81,6 +179,8 @@
   --border: 0 0% 12%;
   --input: 0 0% 12%;
 }
+
+/* Orchid Depths Background - Only affects body background, not cards */
 
 /* Gray Light Theme */
 .light.gray {
@@ -99,11 +199,131 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
   }
+  
+  /* Background theme overrides - must be in base layer to override @apply */
+  /* Orchid Depths Background - Only affects page background (html/body), not cards */
+  html.dark.orchid, html.dark.orchid body {
+    background-image: radial-gradient(125% 125% at 50% 100%, #000000 40%, #350136 100%) !important;
+    background-color: #000 !important;
+    background-repeat: no-repeat !important;
+    background-position: 50% 100% !important; /* bottom center */
+    background-attachment: fixed !important;
+    background-size: cover !important;
+  }
+  /* Apply gradient to the visible app wrapper so cards (bg-background) don't cover it */
+  html.dark.aurora .min-h-screen.bg-background {
+    background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(120, 180, 255, 0.25), transparent 70%) !important;
+    background-color: transparent !important;
+    background-position: 50% 0% !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+  }
+
+  /* Aurora Midnight Glow Background - Only affects page background (html/body), not cards */
+  html.dark.aurora, html.dark.aurora body {
+    background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(120, 180, 255, 0.25), transparent 70%) , linear-gradient(#000000,#000000) !important;
+    background-color: #000 !important;
+    background-repeat: no-repeat !important;
+    background-position: 50% 0% !important; /* top center */
+    background-attachment: fixed !important;
+    background-size: cover !important;
+  }
+  html.dark.crimson .min-h-screen.bg-background {
+    background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 80, 120, 0.25), transparent 70%) !important;
+    background-color: transparent !important;
+    background-position: 50% 0% !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+  }
+
+  /* Crimson Shadow Glow Background - Only affects page background (html/body), not cards */
+  html.dark.crimson, html.dark.crimson body {
+    background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 80, 120, 0.25), transparent 70%) , linear-gradient(#000000,#000000) !important;
+    background-color: #000 !important;
+    background-repeat: no-repeat !important;
+    background-position: 50% 0% !important; /* top center */
+    background-attachment: fixed !important;
+    background-size: cover !important;
+  }
+  html.dark.pearl .min-h-screen.bg-background {
+    background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(226, 232, 240, 0.15), transparent 70%) !important;
+    background-color: transparent !important;
+    background-position: 50% 0% !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+  }
+
+  /* Pearl Mist Glow Background - Only affects page background (html/body), not cards */
+  html.dark.pearl, html.dark.pearl body {
+    background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(226, 232, 240, 0.15), transparent 70%) , linear-gradient(#000000,#000000) !important;
+    background-color: #000 !important;
+    background-repeat: no-repeat !important;
+    background-position: 50% 0% !important; /* top center */
+    background-attachment: fixed !important;
+    background-size: cover !important;
+  }
+  /* Dark Dot Matrix - subtle pixel dots */
+  html.dark.dark-dot-matrix .min-h-screen.bg-background,
+  html.dark.dark-dot-matrix body {
+    background-color: #0a0a0a !important;
+    background-image: radial-gradient(circle at 25% 25%, #222222 0.5px, transparent 1px), radial-gradient(circle at 75% 75%, #111111 0.5px, transparent 1px) !important;
+    background-size: 10px 10px !important;
+    image-rendering: pixelated !important;
+    background-position: 0 0 !important;
+    background-attachment: fixed !important;
+  }
+  /* Dark Noise Colored */
+  html.dark.dark-noise-colored .min-h-screen.bg-background,
+  html.dark.dark-noise-colored body {
+    background-color: #000000 !important;
+    background-image: radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.2) 1px, transparent 0), radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.18) 1px, transparent 0), radial-gradient(circle at 1px 1px, rgba(236, 72, 153, 0.15) 1px, transparent 0) !important;
+    background-size: 20px 20px, 30px 30px, 25px 25px !important;
+    background-position: 0 0, 10px 10px, 15px 5px !important;
+    background-attachment: fixed !important;
+  }
+  /* Light background variants - apply to the top-level wrapper only */
+/* Light Themes */
+html.light.gray .min-h-screen.bg-background,
+html.light.gray body {
+  background: linear-gradient(to right, #f8fafc, #e2e8f0);
 }
 
+html.light.bottom-slate .min-h-screen.bg-background,
+html.light.bottom-slate body {
+  background-image: radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #475569 100%) !important;
+  background-color: #ffffff !important;
+  background-position: 50% 10% !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+html.light.bottom-violet .min-h-screen.bg-background,
+html.light.bottom-violet body {
+  background: linear-gradient(to bottom, #faf5ff, #e9d5ff);
+}
+
+html.light.aurora-dream .min-h-screen.bg-background,
+html.light.aurora-dream body {
+  background: radial-gradient(circle at top left, #f0f9ff, #e0f2fe, #f5f3ff, #fce7f3);
+}
+
+/* Diagonal Grid - Light */
+html.light.diagonal-grid .min-h-screen.bg-background,
+html.light.diagonal-grid body {
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.06) 0, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 20px), repeating-linear-gradient(-45deg, rgba(0,0,0,0.06) 0, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 20px) !important;
+  background-color: #fafafa !important;
+  background-size: 40px 40px !important;
+  background-position: 0 0 !important;
+  background-attachment: fixed !important;
+}
+ 
 /* Theme transition styles */
 @layer utilities {
   .theme-transition {
@@ -145,4 +365,5 @@
     transition: background-color 400ms ease-in-out, 
                 color 400ms ease-in-out !important;
   }
+}
 }

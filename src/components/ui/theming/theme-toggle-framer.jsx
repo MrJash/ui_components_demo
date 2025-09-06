@@ -75,18 +75,7 @@ export function ThemeToggleFramer() {
       }
     }
   }
-
-  // Background glow animation
-  const glowVariants = {
-    light: {
-      background: "radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%)",
-      scale: 1,
-    },
-    dark: {
-      background: "radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%)",
-      scale: 1.1,
-    }
-  }
+ 
 
   return (
     <motion.button
@@ -101,7 +90,6 @@ export function ThemeToggleFramer() {
       {/* Background glow effect */}
       <motion.div
         className="absolute inset-0 rounded-full"
-        variants={glowVariants}
         animate={theme}
         transition={{
           duration: 0.5,

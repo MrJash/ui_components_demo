@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
@@ -27,12 +28,14 @@ export default function OverlaysPage() {
     return () => clearTimeout(timer)
   }, [])
 
+  const wrapper = { hidden: { opacity: 0, scale: 0.98 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.45 } } }
+
   return (
     <TooltipProvider>
-      <div className="space-y-8">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">Overlays & Feedback</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+      <motion.div initial="hidden" animate="visible" variants={wrapper} className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Overlays & Feedback</h1>
+          <p className="mt-0.5 text-muted-foreground mx-auto">
             Modal dialogs, notifications, alerts, feedback components, and overlay elements for enhanced user interactions.
           </p>
         </div>
@@ -567,7 +570,7 @@ export default function OverlaysPage() {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </motion.div>
     </TooltipProvider>
   )
 }

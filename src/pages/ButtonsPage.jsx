@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { Button } from '../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Toggle } from '../components/ui/toggle'
@@ -7,6 +8,7 @@ import { Slider } from '../components/ui/slider'
 import { Separator } from '../components/ui/separator'
 import { LoaderIcon, HeartIcon, ChevronDownIcon, PlusIcon, BoldIcon, ItalicIcon, UnderlineIcon } from 'lucide-react'
 import { cn } from '../lib/utils'
+import LiquidGlass from 'liquid-glass-react'
 
 export default function ButtonsPage() {
   const [loading, setLoading] = useState(false)
@@ -258,11 +260,13 @@ export default function ButtonsPage() {
     // the formatting that will be applied to new text
   }
 
+  const wrapper = { hidden: { opacity: 0, y: -10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }
+
   return (
-    <div className="space-y-8">
+    <motion.div initial="hidden" animate="visible" variants={wrapper} className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Buttons & Actions</h1>
-        <p className="text-muted-foreground">
+        <p className="mt-0.5 text-muted-foreground">
           Interactive elements and action triggers for user interactions.
         </p>
       </div>
@@ -524,6 +528,6 @@ export default function ButtonsPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+  </motion.div>
   )
 }

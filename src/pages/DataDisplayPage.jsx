@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Badge } from '../components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar'
@@ -15,11 +16,20 @@ const tableData = [
 ]
 
 export default function DataDisplayPage() {
+  const container = {  hidden: { opacity: 0, scale: 0.9 },
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } 
+  }
+}
+  const item = { hidden: { opacity: 0, y: -8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.38 } } }
+
   return (
-    <div className="space-y-8">
+    <motion.div initial="hidden" animate="visible" variants={container} className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Data Display</h1>
-        <p className="text-muted-foreground">
+        <p className="mt-0.5 text-muted-foreground">
           Components for displaying data and content in organized layouts.
         </p>
       </div>
@@ -317,6 +327,6 @@ export default function DataDisplayPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </motion.div>
   )
 }

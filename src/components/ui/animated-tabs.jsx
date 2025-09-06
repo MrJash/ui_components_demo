@@ -4,13 +4,27 @@ import { motion } from "framer-motion"
 import { cn } from "../../lib/utils"
 
 // Main AnimatedTabs component
-const AnimatedTabs = React.forwardRef(({ className, ...props }, ref) => (
-  <TabsPrimitive.Root
-    ref={ref}
-    className={cn("w-full", className)}
-    {...props}
-  />
-))
+const AnimatedTabs = React.forwardRef(({ className, onValueChange, ...props }, ref) => {
+  // Enhanced onValueChange to notify TabsList children
+  const handleValueChange = React.useCallback((value) => {
+    onValueChange?.(value)
+    // Dispatch custom event to notify TabsList components
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('animated-tabs-change', { 
+        detail: { value, timestamp: Date.now() }
+      }))
+    }
+  }, [onValueChange])
+
+  return (
+    <TabsPrimitive.Root
+      ref={ref}
+      className={cn("w-full", className)}
+      onValueChange={handleValueChange}
+      {...props}
+    />
+  )
+})
 AnimatedTabs.displayName = "AnimatedTabs"
 
 // Custom TabsList with animated indicator
@@ -19,6 +33,7 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
   const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0, opacity: 0 })
   const tabsListRef = React.useRef(null)
   const tabElementsRef = React.useRef({})
+  const resizeObserverRef = React.useRef(null)
 
   // Update indicator position
   const updateIndicator = React.useCallback((tabValue) => {
@@ -39,36 +54,141 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
     })
   }, [])
 
-  // Find and set the initially active tab
+  // Set up resize observer to handle responsive updates
   React.useEffect(() => {
-    if (children && !activeTab) {
-      const firstTab = React.Children.toArray(children).find(
-        child => React.isValidElement(child) && child.props.value
-      )
-      if (firstTab && firstTab.props.value) {
-        setActiveTab(firstTab.props.value)
-      }
-    }
-  }, [children, activeTab])
-
-  // Update indicator when active tab changes
-  React.useEffect(() => {
-    if (activeTab) {
-      // Multiple attempts to ensure proper positioning
-      const timeouts = [0, 50, 150, 300]
-      timeouts.forEach(delay => {
-        setTimeout(() => {
-          updateIndicator(activeTab)
-        }, delay)
+    if (typeof window !== 'undefined' && tabsListRef.current) {
+      resizeObserverRef.current = new ResizeObserver(() => {
+        if (activeTab) {
+          // Debounce the update to avoid excessive calls
+          setTimeout(() => {
+            updateIndicator(activeTab)
+          }, 50)
+        }
       })
+      
+      resizeObserverRef.current.observe(tabsListRef.current)
+      
+      // Also listen to window resize for mobile/desktop transitions
+      const handleResize = () => {
+        if (activeTab) {
+          setTimeout(() => {
+            updateIndicator(activeTab)
+          }, 100)
+        }
+      }
+      
+      window.addEventListener('resize', handleResize)
+      
+      return () => {
+        if (resizeObserverRef.current) {
+          resizeObserverRef.current.disconnect()
+        }
+        window.removeEventListener('resize', handleResize)
+      }
     }
   }, [activeTab, updateIndicator])
 
-  // Handle tab clicks
+  // Find and set the initially active tab - also sync with external changes
+  React.useEffect(() => {
+    if (children) {
+      // Check if we have a defaultValue from the parent
+      const parentDefaultValue = props.defaultValue
+      
+      if (parentDefaultValue && parentDefaultValue !== activeTab) {
+        setActiveTab(parentDefaultValue)
+        return
+      }
+      
+      // If no activeTab is set, find the first tab
+      if (!activeTab) {
+        const firstTab = React.Children.toArray(children).find(
+          child => React.isValidElement(child) && child.props.value
+        )
+        if (firstTab && firstTab.props.value) {
+          setActiveTab(firstTab.props.value)
+        }
+      }
+    }
+  }, [children, activeTab, props.defaultValue])
+
+  // Check for programmatic value changes from parent component
+  React.useEffect(() => {
+    if (props.value && props.value !== activeTab) {
+      setActiveTab(props.value)
+    }
+  }, [props.value, activeTab])
+
+  // Update indicator when active tab changes - improved timing
+  React.useEffect(() => {
+    if (activeTab) {
+      // Use requestAnimationFrame for better timing
+      requestAnimationFrame(() => {
+        updateIndicator(activeTab)
+      })
+      
+      // Additional fallback for complex layout changes
+      const fallbackTimer = setTimeout(() => {
+        updateIndicator(activeTab)
+      }, 200)
+      
+      return () => clearTimeout(fallbackTimer)
+    }
+  }, [activeTab, updateIndicator])
+
+  // Handle tab clicks and sync with Radix
   const handleTabClick = (tabValue) => {
     setActiveTab(tabValue)
-    updateIndicator(tabValue)
+    // Forward to parent onValueChange callback if provided
+    if (props.onValueChange) {
+      props.onValueChange(tabValue)
+    }
+    // Use requestAnimationFrame to ensure DOM has updated
+    requestAnimationFrame(() => {
+      updateIndicator(tabValue)
+    })
   }
+
+  // Listen for value changes from parent Radix Tabs component
+  React.useEffect(() => {
+    // Listen for custom events from AnimatedTabs root
+    const handleTabsChange = (event) => {
+      const newValue = event.detail?.value
+      if (newValue && newValue !== activeTab) {
+        setActiveTab(newValue)
+      }
+    }
+    
+    if (typeof window !== 'undefined') {
+      window.addEventListener('animated-tabs-change', handleTabsChange)
+    }
+    
+    // Also try to find the parent tabs and observe it directly
+    const tabsRoot = tabsListRef.current?.closest('[data-radix-tabs-root]')
+    let observer
+    if (tabsRoot) {
+      observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-value') {
+            const newValue = tabsRoot.getAttribute('data-value')
+            if (newValue && newValue !== activeTab) {
+              setActiveTab(newValue)
+            }
+          }
+        })
+      })
+      
+      observer.observe(tabsRoot, { attributes: true })
+    }
+    
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('animated-tabs-change', handleTabsChange)
+      }
+      if (observer) {
+        observer.disconnect()
+      }
+    }
+  }, [activeTab])
 
   // Enhanced children with refs and click handlers
   const enhancedChildren = React.Children.map(children, (child) => {
@@ -78,6 +198,12 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
         ref: (el) => {
           if (el && child.props.value) {
             tabElementsRef.current[child.props.value] = el
+            // Update indicator immediately when ref is set for active tab
+            if (child.props.value === activeTab) {
+              requestAnimationFrame(() => {
+                updateIndicator(child.props.value)
+              })
+            }
           }
         },
         onClick: (e) => {

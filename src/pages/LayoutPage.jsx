@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Separator } from '../components/ui/separator'
 import { AnimatedTabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/animated-tabs'
@@ -9,18 +10,39 @@ import { Badge } from '../components/ui/badge'
 import { ChevronDown } from 'lucide-react'
 
 export default function LayoutPage() {
+  const container = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.06 } }
+  }
+
+  const item = {
+    hidden: { opacity: 0, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: { duration: 0.7, ease: "easeOut" }
+    }
+  }
+
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">Layout Components</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+    <motion.div
+      className="space-y-8"
+      variants={container}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
+      <motion.div variants={item}>
+        <h1 className="text-3xl font-bold tracking-tight">Layout Components</h1>
+        <p className="mt-0.5 text-muted-foreground">
           Components for organizing content, structuring layouts, and creating hierarchical navigation.
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid gap-8">
         {/* Separator */}
-        <Card>
+        <motion.div variants={item}>
+          <Card>
           <CardHeader>
             <CardTitle>Separator</CardTitle>
             <CardDescription>
@@ -52,10 +74,12 @@ export default function LayoutPage() {
               </div>
             </div>
           </CardContent>
-        </Card>
+          </Card>
+        </motion.div>
 
         {/* Tabs */}
-        <Card>
+        <motion.div variants={item}>
+          <Card>
           <CardHeader>
             <CardTitle>Tabs</CardTitle>
             <CardDescription>
@@ -98,10 +122,12 @@ export default function LayoutPage() {
               </TabsContent>
             </AnimatedTabs>
           </CardContent>
-        </Card>
+          </Card>
+        </motion.div>
 
         {/* Accordion */}
-        <Card>
+        <motion.div variants={item}>
+          <Card>
           <CardHeader>
             <CardTitle>Accordion</CardTitle>
             <CardDescription>
@@ -140,10 +166,12 @@ export default function LayoutPage() {
               </AccordionItem>
             </Accordion>
           </CardContent>
-        </Card>
+          </Card>
+        </motion.div>
 
         {/* Collapsible */}
-        <Card>
+        <motion.div variants={item}>
+          <Card>
           <CardHeader>
             <CardTitle>Collapsible</CardTitle>
             <CardDescription>
@@ -194,8 +222,9 @@ export default function LayoutPage() {
               </CollapsibleContent>
             </Collapsible>
           </CardContent>
-        </Card>
+          </Card>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 }

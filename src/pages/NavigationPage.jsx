@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from '../components/ui/navigation-menu'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '../components/ui/breadcrumb'
@@ -9,11 +10,13 @@ import { Badge } from '../components/ui/badge'
 import { Home, ChevronRight, Settings, User, HelpCircle, LogOut } from 'lucide-react'
 
 export default function NavigationPage() {
+  const wrapper = { hidden: { opacity: 0, x: -18 }, visible: { opacity: 1, x: 0, transition: { duration: 0.45 } } }
+
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">Navigation Components</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+    <motion.div initial="hidden" animate="visible" variants={wrapper} className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Navigation Components</h1>
+        <p className="mt-0.5 text-muted-foreground">
           Components for creating navigation menus, breadcrumbs, pagination, and other navigation patterns.
         </p>
       </div>
@@ -313,6 +316,6 @@ export default function NavigationPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </motion.div>
   )
 }

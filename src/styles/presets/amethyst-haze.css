@@ -24,6 +24,9 @@
   --chart-3: 162 35% 60%; /* #77b8a1 */
   --chart-4: 40 70% 75%; /* #f0c88d */
   --chart-5: 215 60% 75%; /* #a0bbe3 */
+  --font-sans: Geist, sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+  --font-mono: "Fira Code", "Courier New", monospace;
   --sidebar-background: 267 62% 95%; /* #f1eff5 */
   --sidebar-foreground: 248 14% 27%; /* #3d3c4f */
   --sidebar-primary: 258 29% 58%; /* #8a79ab */

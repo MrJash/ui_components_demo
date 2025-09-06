@@ -5,7 +5,8 @@ import { cn } from '../lib/utils'
 import { Button } from './ui/button'
 import { ThemeToggle } from './ui/theming/theme-toggle'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet'
-import { Menu, ChevronDown, ChevronUp, X, Navigation as NavigationIcon, Layers, BarChart3, Palette } from 'lucide-react'
+import { Menu, ChevronDown, ChevronUp, X, Navigation as NavigationIcon, Layers, BarChart3, Palette, LayoutGrid, Home, MousePointer, FileText, Database } from 'lucide-react'
+
 
 // Create context for navbar expansion state
 export const NavbarContext = createContext({
@@ -14,11 +15,11 @@ export const NavbarContext = createContext({
 })
 
 const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Buttons', href: '/buttons' },
-  { name: 'Forms', href: '/forms' },
-  { name: 'Data Display', href: '/data-display' },
-  { name: 'Layout', href: '/layout' },
+  { name: 'Home', href: '/', icon: Home },
+  { name: 'Buttons', href: '/buttons', icon: MousePointer },
+  { name: 'Forms', href: '/forms', icon: FileText },
+  { name: 'Data Display', href: '/data-display', icon: Database },
+  { name: 'Layout', href: '/layout', icon: LayoutGrid },
 ]
 
 const moreNavigation = [
@@ -52,8 +53,36 @@ export default function Navbar() {
     setIsExpanded(!isExpanded)
   }
 
+  // Run navbar entrance animation only once per full page load
+  const [runIntro, setRunIntro] = useState(false)
+  useEffect(() => {
+    try {
+      const already = sessionStorage.getItem('navbarIntroRan')
+      if (!already) {
+        setRunIntro(true)
+        sessionStorage.setItem('navbarIntroRan', '1')
+      }
+    } catch (e) {
+      // fallback: run animation if sessionStorage unavailable
+      setRunIntro(true)
+    }
+  }, [])
+
+  const navVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.2,0.8,0.2,1] } }
+  }
+
   return (
-    <nav ref={navRef} className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+    <motion.nav
+      ref={navRef}
+      className="sticky top-0 z-50 border-b border-border 
+         bg-background/40 backdrop-blur-[32px] 
+         shadow-[0_8px_32px_hsl(0_0%_0%/0.2)]"
+      variants={navVariants}
+      initial={runIntro ? 'hidden' : 'visible'}
+      animate="visible"
+    >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -65,22 +94,26 @@ export default function Navbar() {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navigation.map((item) => (
-              <Link key={item.name} href={item.href}>
-                <Button
-                  variant={location === item.href ? 'default' : 'ghost'}
-                  size="sm"
-                  className={cn(
-                    'text-sm font-medium transition-colors',
-                    location === item.href
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-accent hover:text-accent-foreground'
-                  )}
-                >
-                  {item.name}
-                </Button>
-              </Link>
-            ))}
+            {navigation.map((item) => {
+              const Icon = item.icon
+              return (
+                <Link key={item.name} href={item.href}>
+                  <Button
+                    variant={location === item.href ? 'default' : 'ghost'}
+                    size="sm"
+                    className={cn(
+                      'text-sm font-medium transition-colors',
+                      location === item.href
+                        ? 'bg-primary text-primary-foreground'
+                        : 'hover:bg-accent hover:text-accent-foreground'
+                    )}
+                  >
+                    <Icon className="mr-2 h-4 w-4" />
+                    {item.name}
+                  </Button>
+                </Link>
+              )
+            })}
             
             {/* Expand/Collapse Toggle with Animated Icon */}
             <Button
@@ -124,22 +157,26 @@ export default function Navbar() {
                     <SheetTitle>Navigation Menu</SheetTitle>
                   </SheetHeader>
                   <div className="mt-6 flex flex-col space-y-2">
-                    {navigation.map((item) => (
-                      <Link key={item.name} href={item.href}>
-                        <Button
-                          variant={location === item.href ? 'default' : 'ghost'}
-                          className={cn(
-                            'w-full justify-start text-base font-medium',
-                            location === item.href
-                              ? 'bg-primary text-primary-foreground'
-                              : 'hover:bg-accent hover:text-accent-foreground'
-                          )}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.name}
-                        </Button>
-                      </Link>
-                    ))}
+                    {navigation.map((item) => {
+                      const Icon = item.icon
+                      return (
+                        <Link key={item.name} href={item.href}>
+                          <Button
+                            variant={location === item.href ? 'default' : 'ghost'}
+                            className={cn(
+                              'w-full justify-start text-base font-medium',
+                              location === item.href
+                                ? 'bg-primary text-primary-foreground'
+                                : 'hover:bg-accent hover:text-accent-foreground'
+                            )}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            <Icon className="mr-2 h-4 w-4" />
+                            {item.name}
+                          </Button>
+                        </Link>
+                      )
+                    })}
                     <div className="border-t pt-2 mt-4">
                       <p className="text-sm font-medium text-muted-foreground mb-2 px-3">More</p>
                       {moreNavigation.map((item) => {
@@ -205,6 +242,6 @@ export default function Navbar() {
           </div>
         </motion.div>
       </div>
-    </nav>
+    </motion.nav>
   )
 }

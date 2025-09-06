@@ -3,45 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ca
 import { Button } from '../button'
 import { Badge } from '../badge'
 import { useTheme } from '../../../contexts/ThemeContext'
-import { Monitor, Moon, Sun, Palette } from 'lucide-react'
 
 export function ThemeStyleSelector() {
   const { theme, themeStyle, setThemeStyle } = useTheme()
 
-  const lightStyles = [
-    {
-      id: 'default',
-      name: 'Plain White',
-      description: 'Clean white background with subtle shadows',
-      preview: 'bg-white border-gray-200',
-      icon: <Sun className="w-4 h-4" />
-    },
-    {
-      id: 'gray',
-      name: 'Soft Gray',
-      description: 'Gentle gray background for reduced eye strain',
-      preview: 'bg-gray-50 border-gray-300',
-      icon: <Monitor className="w-4 h-4" />
-    }
-  ]
-
-  const darkStyles = [
-    {
-      id: 'default',
-      name: 'Dark Blue',
-      description: 'Modern dark theme with blue undertones',
-      preview: 'bg-slate-900 border-slate-700',
-      icon: <Moon className="w-4 h-4" />
-    },
-    {
-      id: 'oled',
-      name: 'OLED Black',
-      description: 'Pure black for OLED displays and battery saving',
-      preview: 'bg-black border-gray-800',
-      icon: <Palette className="w-4 h-4" />
-    }
-  ]
-
+ 
   const currentStyles = theme === 'dark' ? darkStyles : lightStyles
 
   const handleStyleChange = (styleId) => {
@@ -74,7 +40,10 @@ export function ThemeStyleSelector() {
               onClick={() => handleStyleChange(style.id)}
             >
               <div className="flex items-start space-x-3">
-                <div className={`w-12 h-8 rounded border-2 ${style.preview}`} />
+                <div 
+                  className={`w-12 h-8 rounded border-2 ${style.preview}`}
+                  style={style.style || {}}
+                />
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center space-x-2">
                     {style.icon}
@@ -97,7 +66,11 @@ export function ThemeStyleSelector() {
             <Monitor className="w-4 h-4 mt-0.5 text-muted-foreground" />
             <div className="text-sm text-muted-foreground">
               <strong>Tip:</strong> {theme === 'dark' 
-                ? 'OLED Black saves battery on OLED displays and provides true black backgrounds.'
+                ? themeStyle === 'oled' 
+                  ? 'OLED Black saves battery on OLED displays and provides true black backgrounds.'
+                  : themeStyle === 'orchid'
+                  ? 'Orchid Depths provides a rich, elegant purple gradient perfect for creative work.'
+                  : 'Dark Blue offers a modern professional look with comfortable blue undertones.'
                 : 'Soft Gray reduces eye strain in bright environments while maintaining readability.'
               }
             </div>

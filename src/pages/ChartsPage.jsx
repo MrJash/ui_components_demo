@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Badge } from '../components/ui/badge'
 import { Button } from '../components/ui/button'
@@ -6,26 +7,41 @@ import { Alert, AlertDescription } from '../components/ui/alert'
 import { BarChart3, LineChart, PieChart, TrendingUp, Activity, Info } from 'lucide-react'
 
 export default function ChartsPage() {
+
+
+  const wrapper = { hidden: { opacity: 0, y: -8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.38 } } }
+  const item = {
+    hidden: { opacity: 0, y: -20, rotate: -3 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotate: 0,
+      transition: { duration: 0.5, type: "spring", stiffness: 120 }
+    }
+  }
+
   return (
-    <div className="space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">Charts & Data Visualization</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+    <motion.div initial="hidden" animate="visible" variants={wrapper} className="space-y-8">
+      <motion.div variants={item}>
+        <h1 className="text-3xl font-bold tracking-tight">Charts & Data Visualization</h1>
+        <p className="mt-0.5 text-muted-foreground mx-auto">
           Beautiful and interactive charts for data visualization. These components require additional chart libraries.
         </p>
-      </div>
+      </motion.div>
 
       {/* Installation Notice */}
-      <Alert>
+      <motion.div variants={item}>
+        <Alert>
         <Info className="h-4 w-4" />
         <AlertDescription>
           Charts are not included in this demo. To add charts to your project, install a charting library like{' '}
           <code className="text-sm bg-muted px-1 py-0.5 rounded">recharts</code> or{' '}
           <code className="text-sm bg-muted px-1 py-0.5 rounded">chart.js</code> and configure the shadcn/ui chart components.
         </AlertDescription>
-      </Alert>
+        </Alert>
+      </motion.div>
 
-      <div className="grid gap-8">
+  <motion.div variants={item} className="grid gap-8">
         {/* Chart Types Preview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Area Chart */}
@@ -303,7 +319,7 @@ import { Bar, BarChart, XAxis, YAxis } from "recharts"`}
             </div>
           </CardContent>
         </Card>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
