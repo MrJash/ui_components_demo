@@ -20,6 +20,31 @@ function AppContent() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }, [location])
 
+  useEffect(() => {
+    // If there's a hash in the location, poll for the matching heading and scroll when found.
+    const idx = location.indexOf('#')
+    if (idx === -1) return
+
+    const hash = decodeURIComponent(location.slice(idx + 1))
+    let attempts = 0
+    const maxAttempts = 20 // ~2s (20 * 100ms)
+
+    const interval = setInterval(() => {
+      attempts += 1
+      // broaden selector to common heading tags and card titles
+      const els = Array.from(document.querySelectorAll('h1,h2,h3,h4,legend, .card-title'))
+      const target = els.find((el) => el.textContent && el.textContent.trim().toLowerCase().includes(hash.toLowerCase()))
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        clearInterval(interval)
+      } else if (attempts >= maxAttempts) {
+        clearInterval(interval)
+      }
+    }, 100)
+
+    return () => clearInterval(interval)
+  }, [location])
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />

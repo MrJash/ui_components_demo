@@ -3,6 +3,7 @@
   "style": "default",
   "rsc": false,
   "tsx": false,
+  
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/style.css",
@@ -13,6 +14,10 @@
     "components": "src/components",
     "utils": "src/lib/utils",
     "ui": "src/components/ui"
-  }
+  },
+  "registries": {
+  "@ai-tools": "https://ai-tools-registry.vercel.app/api/registry/public/{name}"
+}
+
 }
 
