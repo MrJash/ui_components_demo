@@ -16,8 +16,7 @@
     "ui": "src/components/ui"
   },
   "registries": {
-  "@ai-tools": "https://ai-tools-registry.vercel.app/api/registry/public/{name}"
-}
-
+  "@aceternity": "https://ui.aceternity.com/registry/{name}.json"
+  }
 }
 

@@ -224,9 +224,28 @@ export default function OverlaysPage() {
                 
                 <Button
                   variant="outline"
-                  onClick={() => toast.loading("Loading...", { duration: 2000 })}
+                  onClick={() => {
+                    const toastId = toast.loading("Loading...");
+                    // Simulate loading process that completes after 2 seconds
+                    setTimeout(() => {
+                      toast.success("Loading completed!", { id: toastId });
+                    }, 2000);
+                  }}
                 >
                   Loading Toast
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    const toastId = toast.loading("Processing...");
+                    // Auto-dismiss after 3 seconds without replacement
+                    setTimeout(() => {
+                      toast.dismiss(toastId);
+                    }, 3000);
+                  }}
+                >
+                  Auto-dismiss Loading
                 </Button>
               </div>
             </CardContent>

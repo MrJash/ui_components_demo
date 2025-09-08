@@ -88,9 +88,9 @@ export function ThemeToggleSpring() {
     >
       <animated.div style={iconSpring} className="flex items-center justify-center w-full h-full">
         {theme === 'dark' ? (
-          <Sun className="w-4 h-4 text-white" />
+          <Moon className="w-4 h-4 text-white" />
         ) : (
-          <Moon className="w-4 h-4 text-gray-700" />
+          <Sun className="w-4 h-4 text-gray-700" />
         )}
       </animated.div>
     </animated.button>

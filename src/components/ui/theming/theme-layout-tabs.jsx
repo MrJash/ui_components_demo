@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { AnimatedTabs, TabsContent, TabsList, TabsTrigger } from '../animated-tabs'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../card'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../dropdown-menu'
 import { Badge } from '../badge'
 import { Button } from '../button'
 import { useTheme } from '../../../contexts/ThemeContext'
-import { Monitor, Moon, Sun, Palette, Paintbrush2, Info, Zap, Heart, Sparkles } from 'lucide-react'
+import { Monitor, Moon, Sun, Palette, Paintbrush2, Info, Zap, Heart, Sparkles, Edit, Share2 } from 'lucide-react'
 import '../../../styles/presets/amethyst-haze.css'
 import '../../../styles/presets/sunset-horizon.css'
 import '../../../styles/presets/bold-tech.css'
 import '../../../styles/presets/elegant-luxury.css'
 import '../../../styles/presets/nature.css'
 
-export function ThemeLayoutTabs() {
+export function ThemeLayoutTabs({ onCustomizeTheme, onShareTheme }) {
   const { theme, themeStyle, setThemeStyle, themePreset, setThemePreset } = useTheme()
   
   // State to remember the last selected background style before switching to presets
@@ -234,9 +235,28 @@ export function ThemeLayoutTabs() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center space-x-2">
-          <Palette className="w-5 h-5" />
-          <CardTitle>Theme Customization</CardTitle>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Palette className="w-5 h-5" />
+            <CardTitle>Theme Customization</CardTitle>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="" className="h-8 w-8 p-0">
+                <Edit className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={onCustomizeTheme}>
+                <Palette className="mr-2 h-4 w-4" />
+                Customize Theme
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onShareTheme}>
+                <Share2 className="mr-2 h-4 w-4" />
+                Share Theme
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <CardDescription>
           Customize your theme colors and backgrounds
@@ -245,13 +265,13 @@ export function ThemeLayoutTabs() {
       <CardContent>
   <AnimatedTabs defaultValue="backgrounds" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="backgrounds">Backgrounds</TabsTrigger>
-            <TabsTrigger value="presets">Presets</TabsTrigger>
+            <TabsTrigger className="text-sm sm:text-base md:text-lg lg:text-xl" value="backgrounds">Backgrounds</TabsTrigger>
+            <TabsTrigger className="text-sm sm:text-base md:text-lg lg:text-xl" value="presets">Presets</TabsTrigger>
           </TabsList>
           
           <TabsContent value="backgrounds" className="space-y-4">
             {themePreset !== 'default' && (
-              <div className="p-4 bg-muted/50 rounded-lg border border-muted">
+              <div className="p-2 bg-muted/50 rounded-lg border border-muted">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <div className="flex items-center space-x-2 text-muted-foreground min-w-0 flex-1">
                     <Info className="w-4 h-4 shrink-0" />

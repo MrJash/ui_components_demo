@@ -36,23 +36,23 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
   const resizeObserverRef = React.useRef(null)
 
   // Update indicator position
-  const updateIndicator = React.useCallback((tabValue) => {
-    if (!tabValue || !tabsListRef.current || !tabElementsRef.current[tabValue]) {
-      return
-    }
+ const updateIndicator = React.useCallback((tabValue) => {
+  if (!tabValue || !tabsListRef.current || !tabElementsRef.current[tabValue]) return
 
-    const tabsList = tabsListRef.current
-    const activeTabElement = tabElementsRef.current[tabValue]
-    
-    const listRect = tabsList.getBoundingClientRect()
-    const tabRect = activeTabElement.getBoundingClientRect()
-    
-    setIndicatorStyle({
-      left: tabRect.left - listRect.left,
-      width: tabRect.width,
-      opacity: 1
-    })
-  }, [])
+  const tabsList = tabsListRef.current
+  const activeTabElement = tabElementsRef.current[tabValue]
+
+  const listRect = tabsList.getBoundingClientRect()
+  const tabRect = activeTabElement.getBoundingClientRect()
+
+  setIndicatorStyle({
+    left: tabRect.left - listRect.left,
+    width: tabRect.width,
+    top: tabRect.top - listRect.top,
+    height: tabRect.height,
+    opacity: 1,
+  })
+}, [])
 
   // Set up resize observer to handle responsive updates
   React.useEffect(() => {
@@ -223,7 +223,7 @@ const TabsList = React.forwardRef(({ className, children, ...props }, ref) => {
         else if (ref) ref.current = el
       }}
       className={cn(
-        "relative inline-flex h-10 items-center justify-center rounded-full bg-muted p-1 text-muted-foreground",
+        "relative inline-flex h-20 items-center justify-center rounded-full bg-muted p-1 text-muted-foreground",
         className
       )}
       {...props}
@@ -258,7 +258,9 @@ const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "relative z-[2] inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+      "relative z-[2] flex-1 h-full flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium ring-offset-background transition-colors",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "disabled:pointer-events-none disabled:opacity-50",
       "data-[state=active]:text-foreground hover:text-foreground/80",
       className
     )}

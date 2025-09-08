@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, useAnimation, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../../../contexts/ThemeContext'
 
 export function ThemeToggleFramer() {
   const { theme, toggleTheme } = useTheme()
   const controls = useAnimation()
+  const [isInitialized, setIsInitialized] = useState(false)
+
+  // Initialize the component once the theme is properly loaded
+  useEffect(() => {
+    // Small delay to ensure theme context is fully loaded
+    const timer = setTimeout(() => {
+      setIsInitialized(true)
+    }, 100)
+    
+    return () => clearTimeout(timer)
+  }, [])
 
   const handleToggle = () => {
     // Toggle theme immediately
@@ -86,6 +97,10 @@ export function ThemeToggleFramer() {
       whileTap="tap"
       animate={controls}
       aria-label="Toggle theme"
+      style={{
+        opacity: isInitialized ? 1 : 0,
+      }}
+      disabled={!isInitialized}
     >
       {/* Background glow effect */}
       <motion.div

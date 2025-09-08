@@ -71,7 +71,7 @@ const item = {
 
       <motion.div className="text-center pt-8" variants={item}>
         <motion.h2 className="text-2xl font-semibold mb-4" variants={item}>About This Showcase</motion.h2>
-        <motion.p className="text-muted-foreground max-w-3xl mx-auto" variants={item}>
+        <motion.p className="text-muted-foreground max-w-5xl mx-auto" variants={item}>
           This showcase demonstrates all the components from the shadcn/ui library. Each component is
           implemented with proper TypeScript support, accessibility features, and consistent theming.
           The components are built on top of Radix UI primitives and styled with Tailwind CSS.
